@@ -12,9 +12,18 @@
         ShowInTaskbar="False"
         WindowStartupLocation="Manual">
 
+    <Window.Resources>
+        <SolidColorBrush x:Key="GlassStroke" Color="#5A5A5A"/>
+        <LinearGradientBrush x:Key="IslandFill" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#101214" Offset="0"/>
+            <GradientStop Color="#090A0D" Offset="0.35"/>
+            <GradientStop Color="#050607" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+
     <Border x:Name="Island"
-            Background="#050505"
-            BorderBrush="#202020"
+            Background="{StaticResource IslandFill}"
+            BorderBrush="{StaticResource GlassStroke}"
             BorderThickness="1"
             CornerRadius="24"
             Padding="15"
@@ -24,6 +33,10 @@
             MouseLeftButtonDown="Island_MouseLeftButtonDown"
             MouseLeftButtonUp="Island_MouseLeftButtonUp"
             ClipToBounds="True">
+
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="28" ShadowDepth="8" Direction="270" Opacity="0.45" Color="#000000"/>
+        </Border.Effect>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -40,56 +53,65 @@
 
                 <Ellipse Width="9" Height="9" Fill="#30D158"
                          VerticalAlignment="Center" Margin="0,0,9,0"/>
-                <TextBlock x:Name="IslandTitle" Grid.Column="1" Text="iLand"
-                           Foreground="White" FontSize="12" VerticalAlignment="Center"/>
+
+                <TextBlock x:Name="IslandTitle" Grid.Column="1"
+                           Text="iLand" Foreground="#F5F5F7" FontSize="12"
+                           FontWeight="SemiBold" VerticalAlignment="Center"/>
+
                 <TextBlock x:Name="PageIndicator" Grid.Column="2" Text="1 / 3"
-                           Foreground="#777777" FontSize="10" VerticalAlignment="Center"/>
+                           Foreground="#8A8A8E" FontSize="10" VerticalAlignment="Center"/>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="ExpandedContent"
-                  Visibility="Collapsed" Margin="0,12,0,0">
+            <Grid Grid.Row="1" x:Name="ExpandedContent" Visibility="Collapsed" Margin="0,12,0,0">
                 <Grid x:Name="HomePage" Visibility="Visible">
                     <StackPanel>
-                        <TextBlock x:Name="ClockText" Text="12:00" FontSize="34"
-                                   FontWeight="SemiBold" Foreground="White"/>
-                        <TextBlock x:Name="DateText" Text="Saturday" Foreground="#999999"
-                                   FontSize="12" Margin="0,2,0,14"/>
-                        <Border Background="#191919" CornerRadius="14" Padding="12">
+                        <TextBlock x:Name="ClockText" Text="12:00"
+                                   FontSize="34" FontWeight="SemiBold"
+                                   Foreground="#FFFFFF"/>
+
+                        <TextBlock x:Name="DateText" Text="Saturday"
+                                   Foreground="#A1A1A6" FontSize="12"
+                                   Margin="0,2,0,14"/>
+
+                        <Border Background="#181A1D" BorderBrush="#2A2C2F" BorderThickness="1"
+                                CornerRadius="14" Padding="12">
                             <StackPanel>
-                                <TextBlock Text="♫  Сейчас играет" Foreground="#AAAAAA" FontSize="11"/>
-                                <TextBlock x:Name="MusicText" Text="Ожидание музыки..."
-                                           Foreground="White" FontSize="13" Margin="0,7,0,0"/>
-                                <TextBlock Text="Медиаплеер Windows" Foreground="#777777" FontSize="10"/>
+                                <TextBlock Text="Now Playing" Foreground="#8D8D92" FontSize="10"/>
+                                <TextBlock x:Name="MusicText" Text="Waiting for music..."
+                                           Foreground="#FFFFFF" FontSize="13" Margin="0,7,0,0"/>
+                                <TextBlock Text="Windows Media Player" Foreground="#6F6F73" FontSize="10"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
                 </Grid>
 
                 <StackPanel x:Name="MonitorPage" Visibility="Collapsed">
-                    <TextBlock Text="СИСТЕМА" Foreground="#999999" FontSize="10" Margin="0,0,0,12"/>
-                    <TextBlock x:Name="CpuText" Text="CPU  0%" Foreground="White"/>
-                    <ProgressBar x:Name="CpuBar" Maximum="100" Height="5" Margin="0,5,0,12"/>
-                    <TextBlock x:Name="GpuText" Text="GPU  --" Foreground="White"/>
-                    <ProgressBar x:Name="GpuBar" Maximum="100" Height="5" Margin="0,5,0,12"/>
-                    <TextBlock x:Name="RamText" Text="RAM  0%" Foreground="White"/>
-                    <ProgressBar x:Name="RamBar" Maximum="100" Height="5" Margin="0,5,0,12"/>
-                    <TextBlock x:Name="VramText" Text="VRAM  --" Foreground="#AAAAAA" FontSize="11"/>
+                    <TextBlock Text="SYSTEM" Foreground="#8C8C90" FontSize="10" Margin="0,0,0,12"/>
+
+                    <TextBlock x:Name="CpuText" Text="CPU  0%" Foreground="#F5F5F7" FontSize="12"/>
+                    <ProgressBar x:Name="CpuBar" Maximum="100" Height="5" Margin="0,5,0,12" Foreground="#7ED957" Background="#1F2023"/>
+
+                    <TextBlock x:Name="GpuText" Text="GPU  --" Foreground="#F5F5F7" FontSize="12"/>
+                    <ProgressBar x:Name="GpuBar" Maximum="100" Height="5" Margin="0,5,0,12" Foreground="#60A5FA" Background="#1F2023"/>
+
+                    <TextBlock x:Name="RamText" Text="RAM  0%" Foreground="#F5F5F7" FontSize="12"/>
+                    <ProgressBar x:Name="RamBar" Maximum="100" Height="5" Margin="0,5,0,12" Foreground="#F7B955" Background="#1F2023"/>
+
+                    <TextBlock x:Name="VramText" Text="VRAM  --" Foreground="#919196" FontSize="11"/>
                 </StackPanel>
 
                 <StackPanel x:Name="TemperaturePage" Visibility="Collapsed">
-                    <TextBlock Text="ТЕМПЕРАТУРЫ" Foreground="#999999" FontSize="10" Margin="0,0,0,15"/>
-                    <TextBlock x:Name="CpuTempText" Text="CPU  -- °C" Foreground="White" FontSize="17" Margin="0,0,0,12"/>
-                    <TextBlock x:Name="GpuTempText" Text="GPU  -- °C" Foreground="White" FontSize="17" Margin="0,0,0,12"/>
-                    <TextBlock x:Name="FanText" Text="Вентиляторы  -- RPM" Foreground="#AAAAAA" FontSize="12"/>
-                    <TextBlock Text="Данные аппаратных датчиков" Foreground="#666666" FontSize="10" Margin="0,20,0,0"/>
+                    <TextBlock Text="TEMPERATURES" Foreground="#8C8C90" FontSize="10" Margin="0,0,0,15"/>
+
+                    <TextBlock x:Name="CpuTempText" Text="CPU  -- °C" Foreground="#F5F5F7" FontSize="17" Margin="0,0,0,12"/>
+                    <TextBlock x:Name="GpuTempText" Text="GPU  -- °C" Foreground="#F5F5F7" FontSize="17" Margin="0,0,0,12"/>
+                    <TextBlock x:Name="FanText" Text="Fans  -- RPM" Foreground="#A7A7AC" FontSize="12"/>
+                    <TextBlock Text="Hardware sensor data" Foreground="#67676B" FontSize="10" Margin="0,20,0,0"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom">
-                    <Button Content="●" Click="PreviousPage" Background="Transparent"
-                            Foreground="#777777" BorderThickness="0"/>
-                    <Button Content="●" Click="NextPage" Background="Transparent"
-                            Foreground="#777777" BorderThickness="0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button Content="●" Click="PreviousPage" Background="Transparent" Foreground="#58585B" BorderThickness="0" Padding="6,0"/>
+                    <Button Content="●" Click="NextPage" Background="Transparent" Foreground="#58585B" BorderThickness="0" Padding="6,0"/>
                 </StackPanel>
             </Grid>
         </Grid>

@@ -29,8 +29,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        Left = (SystemParameters.PrimaryScreenWidth - CompactWidth) / 2;
-        Top = 12;
+        var screen = SystemParameters.WorkArea;
+        Left = (screen.Width - CompactWidth) / 2;
+        Top = Math.Max(12, (screen.Height - CompactHeight) / 18);
 
         computer = new Computer
         {
@@ -122,11 +123,11 @@ public partial class MainWindow : Window
                 break;
             case 1:
                 MonitorPage.Visibility = Visibility.Visible;
-                IslandTitle.Text = "Мониторинг";
+                IslandTitle.Text = "System";
                 break;
             case 2:
                 TemperaturePage.Visibility = Visibility.Visible;
-                IslandTitle.Text = "Температуры";
+                IslandTitle.Text = "Temps";
                 break;
         }
 
@@ -211,14 +212,14 @@ public partial class MainWindow : Window
                 }
             }
 
-            CpuTempText.Text = cpuTemp.HasValue ? $"CPU  {cpuTemp:F0} °C" : "CPU  Датчик недоступен";
-            GpuTempText.Text = gpuTemp.HasValue ? $"GPU  {gpuTemp:F0} °C" : "GPU  Датчик недоступен";
+            CpuTempText.Text = cpuTemp.HasValue ? $"CPU  {cpuTemp:F0} °C" : "CPU  sensor unavailable";
+            GpuTempText.Text = gpuTemp.HasValue ? $"GPU  {gpuTemp:F0} °C" : "GPU  sensor unavailable";
             GpuText.Text = gpuLoad.HasValue ? $"GPU  {gpuLoad:F0}%" : "GPU  --";
             GpuBar.Value = gpuLoad.HasValue ? Math.Clamp(gpuLoad.Value, 0, 100) : 0;
             VramText.Text = vram.HasValue ? $"VRAM  {vram:F0} MB" : "VRAM  --";
             FanText.Text = fanSpeeds.Count > 0
-                ? $"Вентиляторы  {string.Join(" / ", fanSpeeds.Select(x => $"{x:F0} RPM"))}"
-                : "Вентиляторы  Недоступны";
+                ? $"Fans  {string.Join(" / ", fanSpeeds.Select(x => $"{x:F0} RPM"))}"
+                : "Fans  unavailable";
         }
         catch (Exception ex)
         {
