@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Island</AssemblyName>
+    <RootNamespace>Island</RootNamespace>
+    <Platforms>x86;x64</Platforms>
+    <PlatformTarget Condition="'$(Platform)' == 'x86'">x86</PlatformTarget>
+    <PlatformTarget Condition="'$(Platform)' == 'x64' or '$(Platform)' == ''">x64</PlatformTarget>
+    <Prefer32Bit Condition="'$(Platform)' == 'x86'">true</Prefer32Bit>
+    <Prefer32Bit Condition="'$(Platform)' == 'x64'">false</Prefer32Bit>
+  </PropertyGroup>
+</Project>
